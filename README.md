@@ -1,16 +1,165 @@
-# React + Vite
+# 🧠 InfraLang
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**The hybrid infrastructure language — `.infra`**
 
-Currently, two official plugins are available:
+InfraLang is a small, readable scripting language built for developers who want to automate local infrastructure tasks — like proxies, vaults, and automation — using clean, declarative syntax powered by Node.js.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Declarative:** Simple, config-first primitives for infra tasks  
+- **Scriptable:** Add logic, loops, and functions on top of configs  
+- **Secure:** Built-in vaults and sandboxed system calls  
+- **Extensible:** Modules can be added via Node packages (`@infra/*`)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Installation
+
+Once published to npm:
+
+```bash
+npm install -g infralang
+```
+
+Run a script:
+
+```bash
+infra run hello.infra
+```
+
+---
+
+## 🧩 Quick Example
+
+```infra
+proxy "dev" {
+  listen 9090
+  block "*.ads.*"
+}
+
+vault "default" {
+  master "supersecure"
+  add "github" = "ghp_xxx"
+}
+```
+
+---
+
+## 💡 Why `.infra`?
+
+You want a single language to define, inspect, and automate the infra that surrounds your apps — proxies, vaults, tunnels, and local helpers.  
+InfraLang is intentionally small, readable, and directly mappable to Node.js runtime actions.
+
+---
+
+## 📘 Example Scripts
+
+### Hello World
+```infra
+print "Hello Infra!"
+```
+
+### Proxy Config
+```infra
+proxy "quick" {
+  listen 9090
+  log true
+  block "*.ads.*"
+}
+print "Quick proxy running at :9090"
+```
+
+### Vault Setup
+```infra
+vault "tokens" {
+  master "localpw"
+  add "aws" = "AKIA..."
+  save
+}
+```
+
+---
+
+## 🧱 Project Structure
+
+```
+InfraLang/
+├── src/
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── index.css
+│   └── ...
+├── public/
+├── package.json
+├── tailwind.config.js
+└── vite.config.js
+```
+
+---
+
+## 🧰 Development
+
+To run locally:
+
+```bash
+npm install
+npm run dev
+```
+
+Then open your browser at [http://localhost:5173](http://localhost:5173).
+
+---
+
+## 🌐 Deploy (GitHub Pages)
+
+To deploy your site:
+
+1. In your project root, install GitHub Pages:
+   ```bash
+   npm install gh-pages --save-dev
+   ```
+
+2. Add these lines to your `package.json`:
+   ```json
+   "homepage": "https://distro527.github.io/InfraLang",
+   "scripts": {
+     "predeploy": "npm run build",
+     "deploy": "gh-pages -d dist"
+   }
+   ```
+
+3. Then deploy:
+   ```bash
+   npm run deploy
+   ```
+
+Your site will be live at  
+➡️ **https://distro527.github.io/InfraLang**
+
+---
+
+## 🧠 Tech Stack
+
+- **Frontend:** React + Vite + Tailwind CSS  
+- **Runtime (planned):** Node.js-based parser and executor  
+- **Docs:** Markdown-first architecture with extensible API examples
+
+---
+
+## 🧾 License
+
+MIT License © 2025 [Distro.527](https://github.com/Distro527)
+
+---
+
+## 💬 Community
+
+- **Repo:** [github.com/Distro527/InfraLang](https://github.com/Distro527/InfraLang)  
+- **Discord:** Coming soon  
+- **Contact:** Open an issue or pull request to collaborate
+
+---
+
+Built by **Distro.527** — *InfraHybrid / InfraLang Project*
