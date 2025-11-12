@@ -1,7 +1,6 @@
 {
-  "name": "infralang-site",
-  "private": true,
-  "version": "0.0.1",
+  "name": "infrahub",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,6 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "fs-extra": "^11.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -18,5 +20,21 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.4.10",
     "vite": "^5.4.0"
+  },
+  "description": "InfraHub — the runtime for InfraLang",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Distro527/InfraLang.git"
+  },
+  "keywords": [],
+  "author": "Distro.527",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Distro527/InfraLang/issues"
+  },
+  "homepage": "https://github.com/Distro527/InfraLang#readme",
+  "bin": {
+    "infra": "cli.js"
   }
 }

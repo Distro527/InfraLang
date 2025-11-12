@@ -1,0 +1,41 @@
+{
+  "name": "infra",
+  "version": "0.1.0",
+  "description": "The hybrid infrastructure scripting language — .infra. Designed by Distro.527",
+  "type": "module",
+  "main": "infra.js",
+  "bin": {
+    "infra": "./infra.js"
+  },
+  "scripts": {
+    "start": "node infra.js",
+    "dev": "node infra.js",
+    "test": "node examples/hello.infra"
+  },
+  "keywords": [
+    "infrastructure",
+    "language",
+    "infra",
+    "scripting",
+    "nodejs",
+    "proxy",
+    "vault",
+    "automation"
+  ],
+  "author": "Distro.527",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Distro527/InfraLang.git"
+  },
+  "homepage": "https://github.com/Distro527/InfraLang#readme",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

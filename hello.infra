@@ -1,0 +1,3 @@
+print "Hello Infra!"
+let x = 5
+print "Value of x: " + x
