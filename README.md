@@ -1,165 +1,150 @@
-# 🧠 InfraLang
+# ⚙️ InfraHub
 
-**The hybrid infrastructure language — `.infra`**
-
-InfraLang is a small, readable scripting language built for developers who want to automate local infrastructure tasks — like proxies, vaults, and automation — using clean, declarative syntax powered by Node.js.
-
----
-
-## 🚀 Features
-
-- **Declarative:** Simple, config-first primitives for infra tasks  
-- **Scriptable:** Add logic, loops, and functions on top of configs  
-- **Secure:** Built-in vaults and sandboxed system calls  
-- **Extensible:** Modules can be added via Node packages (`@infra/*`)
+**InfraHub** — The runtime for the InfraLang language.  
+Run `.infra` files with simplicity, power, and speed.
 
 ---
 
-## 📦 Installation
+## 🚀 What is InfraHub?
 
-Once published to npm:
+InfraHub is the official runtime for **InfraLang**, a lightweight scripting language designed for simplicity and expressiveness.  
+It lets you execute `.infra` scripts directly in your terminal.
+
+---
+
+## 🧩 Features
+
+- ⚡ Run `.infra` files instantly  
+- 🧠 Smart runtime handling  
+- 🪶 Lightweight — minimal dependencies  
+- 🔧 CLI support with `infra` command  
+- 🌐 Extensible architecture for future modules  
+
+---
+
+## 💻 Installation
 
 ```bash
-npm install -g infralang
+npm install -g infrahub
 ```
 
-Run a script:
+Once installed, you can run InfraLang files anywhere.
+
+---
+
+## 🧠 Usage
+
+Create a file called `hello.infra`:
+
+```infra
+print("Hello Infra!")
+print("Value of 5:", 5)
+```
+
+Run it using:
 
 ```bash
 infra run hello.infra
 ```
 
----
-
-## 🧩 Quick Example
-
-```infra
-proxy "dev" {
-  listen 9090
-  block "*.ads.*"
-}
-
-vault "default" {
-  master "supersecure"
-  add "github" = "ghp_xxx"
-}
+Output:
+```
+Hello Infra!
+Value of 5: 5
 ```
 
 ---
 
-## 💡 Why `.infra`?
-
-You want a single language to define, inspect, and automate the infra that surrounds your apps — proxies, vaults, tunnels, and local helpers.  
-InfraLang is intentionally small, readable, and directly mappable to Node.js runtime actions.
-
----
-
-## 📘 Example Scripts
-
-### Hello World
-```infra
-print "Hello Infra!"
-```
-
-### Proxy Config
-```infra
-proxy "quick" {
-  listen 9090
-  log true
-  block "*.ads.*"
-}
-print "Quick proxy running at :9090"
-```
-
-### Vault Setup
-```infra
-vault "tokens" {
-  master "localpw"
-  add "aws" = "AKIA..."
-  save
-}
-```
-
----
-
-## 🧱 Project Structure
+## 📦 Project Structure
 
 ```
 InfraLang/
+├── runtime/
+│   ├── cli.js
+│   ├── index.js
+│   └── parser.js
 ├── src/
 │   ├── App.jsx
 │   ├── main.jsx
-│   ├── index.css
-│   └── ...
-├── public/
+│   └── assets/
+│       └── react.svg
 ├── package.json
-├── tailwind.config.js
-└── vite.config.js
+├── README.md
+└── hello.infra
 ```
 
 ---
 
-## 🧰 Development
+## 🧰 Commands
 
-To run locally:
-
-```bash
-npm install
-npm run dev
-```
-
-Then open your browser at [http://localhost:5173](http://localhost:5173).
+| Command | Description |
+|----------|-------------|
+| `infra run <file>` | Run an InfraLang file |
+| `infra version` | Show InfraHub version |
+| `infra help` | Show CLI help |
 
 ---
 
-## 🌐 Deploy (GitHub Pages)
+## 🧩 Dependencies
 
-To deploy your site:
-
-1. In your project root, install GitHub Pages:
-   ```bash
-   npm install gh-pages --save-dev
-   ```
-
-2. Add these lines to your `package.json`:
-   ```json
-   "homepage": "https://distro527.github.io/InfraLang",
-   "scripts": {
-     "predeploy": "npm run build",
-     "deploy": "gh-pages -d dist"
-   }
-   ```
-
-3. Then deploy:
-   ```bash
-   npm run deploy
-   ```
-
-Your site will be live at  
-➡️ **https://distro527.github.io/InfraLang**
+InfraHub uses:
+- **chalk** — for colored terminal output  
+- **commander** — for CLI handling  
+- **fs-extra** — for filesystem utilities  
+- **react** / **react-dom** — for frontend (InfraLang site)
 
 ---
 
-## 🧠 Tech Stack
+## 🤝 Contributing
 
-- **Frontend:** React + Vite + Tailwind CSS  
-- **Runtime (planned):** Node.js-based parser and executor  
-- **Docs:** Markdown-first architecture with extensible API examples
+Want to contribute to InfraHub?  
+We welcome pull requests and suggestions!
 
----
+1. Fork the repository  
+2. Create a new branch (`git checkout -b feature/new-feature`)  
+3. Commit your changes (`git commit -m "Add new feature"`)  
+4. Push to your branch (`git push origin feature/new-feature`)  
+5. Open a Pull Request  
 
-## 🧾 License
-
-MIT License © 2025 [Distro.527](https://github.com/Distro527)
-
----
-
-## 💬 Community
-
-- **Repo:** [github.com/Distro527/InfraLang](https://github.com/Distro527/InfraLang)  
-- **Discord:** Coming soon  
-- **Contact:** Open an issue or pull request to collaborate
+Before submitting, make sure:
+- Code passes lint checks  
+- You’ve updated relevant docs  
+- Your feature aligns with InfraLang’s simplicity philosophy  
 
 ---
 
-Built by **Distro.527** — *InfraHybrid / InfraLang Project*
+## 🗺️ Roadmap
+
+✅ v0.2.0 — Core runtime improvements  
+🔄 v0.3.0 — Parser expansion (variables, conditionals)  
+🚀 v0.4.0 — Infra package manager (IPM)  
+🧠 v0.5.0 — Infra standard library  
+🌐 v1.0.0 — Stable release & documentation site  
+
+---
+
+## 👨‍💻 Maintainer
+
+**InfraHub** is developed and maintained by  
+**Distro.527** — a coder passionate about Node.js and lightweight systems.  
+
+---
+
+## 🌟 Support
+
+If you like InfraHub:
+- ⭐ Star the repo on GitHub  
+- 🐛 Report issues or bugs  
+- 💬 Share feedback or ideas  
+
+---
+
+## 🧠 About InfraLang
+
+InfraLang is a conceptual interpreted language aiming to make learning and scripting easier.  
+It’s designed around:
+- Minimal setup  
+- Readable syntax  
+- Extensible runtime through InfraHub  
+
+More updates coming soon!
