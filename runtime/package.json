@@ -1,6 +1,6 @@
 {
   "name": "infra",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The hybrid infrastructure scripting language — .infra. Designed by Distro.527",
   "type": "module",
   "main": "infra.js",
