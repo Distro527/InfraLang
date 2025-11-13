@@ -5,7 +5,7 @@
   "type": "module",
   "main": "infra.js",
   "bin": {
-    "infra": "./infra.js"
+    "infra": "cli.js"
   },
   "scripts": {
     "start": "node infra.js",
