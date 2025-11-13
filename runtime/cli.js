@@ -1,89 +1,127 @@
 #!/usr/bin/env node
+/**
+ * runtime/cli.js
+ * InfraHub CLI entrypoint (merged full version)
+ *
+ * Commands:
+ *   infra run <file>    Run an .infra file
+ *   infra new <name>    Create a template .infra file
+ *   infra info          Show environment info
+ *   infra --version     Show CLI version
+ *   infra --help        Show help
+ */
+
 import { Command } from "commander";
 import chalk from "chalk";
-import fs from "fs-extra";
 import path from "path";
-import { fileURLToPath } from "url";
-import { runInfraFile } from "./index.js";
+import fs from "fs";
+import { runInfraFile, version as infraVersion } from "./index.js";
 
 const program = new Command();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-const version = "0.2.0";
+// small banner (shown once)
+const banner = `
+╭──────────────────────────────╮
+│         InfraHub CLI         │
+│       v${infraVersion} (beta)      │
+╰──────────────────────────────╯
+`;
 
-// 🟦 Fancy banner
-const banner = chalk.cyanBright(`
-╭───────────────────────────╮
-│      InfraHub v${version}       │
-╰───────────────────────────╯
-`);
+// resolve file path from CWD so CLI can be global
+function resolveFile(file) {
+  return path.resolve(process.cwd(), file);
+}
 
-// Print banner on every command
-console.log(banner);
+function printBanner() {
+  // print compact banner
+  console.log(chalk.cyanBright(banner));
+}
 
-// Command: infra run <file>
+// configure program
+program
+  .name("infra")
+  .description("InfraHub — runtime for InfraLang")
+  .version(infraVersion, "-v, --version", "Show current version");
+
+// run command
 program
   .command("run <file>")
   .alias("r")
-  .description("Run an InfraLang file")
-  .action(async (file) => {
+  .description("Run an .infra file")
+  .option("--beta", "Enable experimental beta features")
+  .action(async (file, options) => {
     try {
-      const filePath = path.resolve(process.cwd(), file);
+      printBanner();
 
-      if (!fs.existsSync(filePath)) {
-        console.log(chalk.red(`❌ File not found: ${file}`));
-        console.log(chalk.yellow(`💡 Try 'infra new ${file.replace(".infra", "")}' to create one.`));
+      const filepath = resolveFile(file);
+
+      if (!fs.existsSync(filepath)) {
+        console.error(chalk.red(`❌ File not found: ${file}`));
+        console.log(chalk.dim(`Tip: run 'infra new ${path.basename(file, ".infra")}' to create a template.`));
+        process.exitCode = 2;
         return;
       }
 
-      console.log(chalk.cyan(`🚀 Running ${file}...\n`));
-      await runInfraFile(filePath);
-      console.log(chalk.green(`\n✅ Execution complete!`));
+      await runInfraFile(filepath, options);
     } catch (err) {
-      console.error(chalk.red(`\n❗ Error: ${err.message}`));
+      console.error(chalk.red("❌ Unhandled error:"));
+      console.error(chalk.gray(err.stack || err.message));
+      process.exitCode = 1;
     }
   });
 
-// Command: infra new <name>
+// new command: create template
 program
   .command("new <name>")
   .alias("n")
-  .description("Create a new InfraLang file")
+  .description("Create a new .infra template file")
   .action(async (name) => {
-    const filename = name.endsWith(".infra") ? name : `${name}.infra`;
-    const filepath = path.resolve(process.cwd(), filename);
+    try {
+      const filename = name.endsWith(".infra") ? name : `${name}.infra`;
+      const filepath = resolveFile(filename);
+      if (fs.existsSync(filepath)) {
+        console.log(chalk.yellow(`⚠ File already exists: ${filename}`));
+        return;
+      }
 
-    if (fs.existsSync(filepath)) {
-      console.log(chalk.yellow(`⚠️ File already exists: ${filename}`));
-      return;
+      const template = [
+        'print "Hello Infra!"',
+        "let x = 5",
+        'print "Value of x: " + x',
+        "",
+        "# Add more InfraLang commands here",
+      ].join("\n");
+
+      await fs.promises.writeFile(filepath, template, "utf8");
+      console.log(chalk.green(`✅ Created ${filename}`));
+    } catch (err) {
+      console.error(chalk.red("Failed to create template:"), err.message);
+      process.exitCode = 1;
     }
-
-    const sampleCode = `print "Hello from ${name}!"\nlet x = 5\nprint "Value of x: " + x`;
-    await fs.writeFile(filepath, sampleCode);
-    console.log(chalk.green(`✅ Created new file: ${filename}`));
   });
 
-// Command: infra info
+// info command
 program
   .command("info")
-  .description("Show InfraHub environment information")
+  .description("Show environment and install info")
   .action(() => {
-    console.log(chalk.cyan("📦 InfraHub Environment Info:\n"));
-    console.log(`Version: ${version}`);
-    console.log(`Node.js: ${process.version}`);
-    console.log(`Install path: ${__dirname}`);
-    console.log(`Working dir: ${process.cwd()}`);
+    printBanner();
+    console.log(chalk.cyan("Environment:"));
+    console.log(`  Version: ${infraVersion}`);
+    console.log(`  Node: ${process.version}`);
+    console.log(`  Platform: ${process.platform}`);
+    console.log(`  CWD: ${process.cwd()}`);
   });
 
-// Built-in options
-program
-  .version(version, "-v, --version", "Show InfraHub version")
-  .helpOption("-h, --help", "Show available commands");
+// override help text extras
+program.addHelpText(
+  "after",
+  `\nExamples:\n  infra run hello.infra\n  infra new demo\n  infra run demo.infra --beta\n`
+);
 
-program.parse(process.argv);
-
-// If no command given
+// default behavior when no args: show help
 if (!process.argv.slice(2).length) {
   program.outputHelp();
+} else {
+  program.parse(process.argv);
 }
